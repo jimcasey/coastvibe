@@ -2,6 +2,7 @@
 
 import { useInvestments } from '../context/InvestmentContext'
 import { formatCurrency, formatPercent } from '../utils/format'
+import AddInvestmentForm from './AddInvestmentForm'
 
 export default function FinancialTable() {
   const { investments, totalValue } = useInvestments()
@@ -62,6 +63,9 @@ export default function FinancialTable() {
               </td>
             </tr>
           ))}
+
+          <AddInvestmentForm />
+
           <tr className="font-bold bg-gray-100 dark:bg-gray-700">
             <td
               colSpan={4}

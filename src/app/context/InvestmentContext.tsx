@@ -8,6 +8,7 @@ import { Investment, InvestmentData } from '../types'
 interface InvestmentContextType {
   investments: Investment[]
   totalValue: number
+  addInvestment: (investment: InvestmentData) => void
 }
 
 // Create the context with a default value
@@ -24,9 +25,10 @@ export function InvestmentProvider({ children }: InvestmentProviderProps) {
   const [investments, setInvestments] = useState<Investment[]>([])
   const [totalValue, setTotalValue] = useState<number>(0)
 
-  useEffect(() => {
+  // Function to calculate values and allocations
+  const recalculatePortfolio = (investmentList: InvestmentData[]) => {
     // Calculate Value for each investment
-    const investmentsWithValue = seedData.map((investment) => ({
+    const investmentsWithValue = investmentList.map((investment) => ({
       ...investment,
       Value: parseFloat((investment.Quantity * investment.Price).toFixed(2)),
       Allocation: 0, // Temporary placeholder
@@ -48,12 +50,23 @@ export function InvestmentProvider({ children }: InvestmentProviderProps) {
 
     setInvestments(completeInvestments)
     setTotalValue(parseFloat(portfolioTotal.toFixed(2)))
+  }
+
+  useEffect(() => {
+    recalculatePortfolio(seedData)
   }, [seedData])
+
+  // Function to add a new investment
+  const addInvestment = (newInvestment: InvestmentData) => {
+    const updatedInvestments = [...investments, newInvestment]
+    recalculatePortfolio(updatedInvestments)
+  }
 
   // Create the context value object
   const contextValue: InvestmentContextType = {
     investments,
-    totalValue
+    totalValue,
+    addInvestment
   }
 
   return (
