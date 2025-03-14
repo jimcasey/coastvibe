@@ -11,9 +11,9 @@ import {
   TableRow,
   TableTotalRow,
 } from '../table'
-import AddInvestment from './AddInvestment'
+import { AddInvestment } from './AddInvestment'
 
-export default function Investments() {
+export const Investments = () => {
   const { investments, totalValue } = useInvestments()
 
   return (

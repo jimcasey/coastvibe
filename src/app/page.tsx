@@ -1,7 +1,7 @@
-import Investments from './components/investments/Investments'
-import { InvestmentProvider } from './context/InvestmentContext'
+import { Investments } from './components/investments'
+import { InvestmentProvider } from './context'
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 gap-8 font-[family-name:var(--font-geist-sans)]">
       <header className="w-full max-w-6xl">
@@ -16,3 +16,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

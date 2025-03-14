@@ -1,6 +1,12 @@
 'use client'
 
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react'
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  ReactNode,
+} from 'react'
 import investmentData from '../data/investmentData.json'
 import { Investment, InvestmentData } from '../types'
 
@@ -12,7 +18,9 @@ interface InvestmentContextType {
 }
 
 // Create the context with a default value
-const InvestmentContext = createContext<InvestmentContextType | undefined>(undefined)
+const InvestmentContext = createContext<InvestmentContextType | undefined>(
+  undefined,
+)
 
 // Provider props interface
 interface InvestmentProviderProps {
@@ -20,7 +28,7 @@ interface InvestmentProviderProps {
 }
 
 // Create the provider component
-export function InvestmentProvider({ children }: InvestmentProviderProps) {
+export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   const seedData = investmentData as InvestmentData[]
   const [investments, setInvestments] = useState<Investment[]>([])
   const [totalValue, setTotalValue] = useState<number>(0)
@@ -66,7 +74,7 @@ export function InvestmentProvider({ children }: InvestmentProviderProps) {
   const contextValue: InvestmentContextType = {
     investments,
     totalValue,
-    addInvestment
+    addInvestment,
   }
 
   return (
@@ -77,7 +85,7 @@ export function InvestmentProvider({ children }: InvestmentProviderProps) {
 }
 
 // Custom hook for using the investment context
-export function useInvestments() {
+export const useInvestments = () => {
   const context = useContext(InvestmentContext)
   if (context === undefined) {
     throw new Error('useInvestments must be used within an InvestmentProvider')

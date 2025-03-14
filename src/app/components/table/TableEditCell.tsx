@@ -7,7 +7,10 @@ interface TableEditCellProps {
   className?: string
 }
 
-export function TableEditCell({ children, className = '' }: TableEditCellProps) {
+export const TableEditCell = ({
+  children,
+  className = '',
+}: TableEditCellProps) => {
   return (
     <td className={`py-2 px-4 border-b dark:border-gray-700 ${className}`}>
       {children}

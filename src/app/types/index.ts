@@ -1,13 +1,3 @@
-// Investment data interface
-export interface InvestmentData {
-  Symbol: string
-  Quantity: number
-  Price: number
-  Category: string
-}
-
-// Full investment data with calculated fields
-export interface Investment extends InvestmentData {
-  Value: number
-  Allocation: number
-}
+// Re-export types from their separate files
+export type { InvestmentData } from './InvestmentData'
+export type { Investment } from './Investment'

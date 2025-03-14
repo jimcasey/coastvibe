@@ -7,7 +7,7 @@ interface TableHeaderProps {
   className?: string
 }
 
-export function TableHeader({ children, className = '' }: TableHeaderProps) {
+export const TableHeader = ({ children, className = '' }: TableHeaderProps) => {
   return (
     <thead className={`bg-gray-100 dark:bg-gray-800 ${className}`}>
       <tr>{children}</tr>

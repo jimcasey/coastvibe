@@ -9,7 +9,7 @@ interface AddInvestmentProps {
   className?: string
 }
 
-export default function AddInvestment({ className = '' }: AddInvestmentProps) {
+export const AddInvestment = ({ className = '' }: AddInvestmentProps) => {
   const { addInvestment } = useInvestments()
   const [newInvestment, setNewInvestment] = useState<InvestmentData>({
     Symbol: '',

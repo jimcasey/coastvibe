@@ -14,7 +14,7 @@ interface TableInputProps {
   className?: string
 }
 
-export function TableInput({
+export const TableInput = ({
   type,
   name,
   value,
@@ -24,7 +24,7 @@ export function TableInput({
   min,
   step,
   className = '',
-}: TableInputProps) {
+}: TableInputProps) => {
   return (
     <input
       type={type}

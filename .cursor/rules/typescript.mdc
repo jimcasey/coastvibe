@@ -1,0 +1,10 @@
+---
+description: TypeScript rules
+globs: *.ts, *.tsx
+alwaysApply: false
+---
+# TypeScript rules
+
+- Use arrow functions instead of the `function` keyword
+- Do not use default exports
+- Use index files in folders

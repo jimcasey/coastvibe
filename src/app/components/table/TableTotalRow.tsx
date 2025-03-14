@@ -10,13 +10,13 @@ interface TableTotalRowProps {
   className?: string
 }
 
-export function TableTotalRow({
+export const TableTotalRow = ({
   label,
   value,
   percentage,
   colSpan = 4,
-  className = ''
-}: TableTotalRowProps) {
+  className = '',
+}: TableTotalRowProps) => {
   return (
     <tr className={`font-bold bg-gray-100 dark:bg-gray-700 ${className}`}>
       <td

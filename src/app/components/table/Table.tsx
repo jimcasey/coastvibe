@@ -7,12 +7,10 @@ interface TableProps {
   className?: string
 }
 
-export function Table({ children, className = '' }: TableProps) {
+export const Table = ({ children, className = '' }: TableProps) => {
   return (
     <div className={`overflow-x-auto w-full ${className}`}>
-      <table className="min-w-full border-collapse">
-        {children}
-      </table>
+      <table className="min-w-full border-collapse">{children}</table>
     </div>
   )
 }
