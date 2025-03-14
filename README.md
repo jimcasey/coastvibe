@@ -13,18 +13,30 @@ This application uses a JSON file to store investment data, which is excluded fr
 
 ```json
 [
-  { "Symbol": "VTI", "Quantity": 3316, "Price": 276.81, "Category": "Large Blend" },
-  { "Symbol": "VTBSX", "Quantity": 3099, "Price": 104.49, "Category": "Intermediate Core Bond" }
+  {
+    "Symbol": "VTI",
+    "Quantity": 3316,
+    "Price": 276.81,
+    "Category": "Large Blend"
+  },
+  {
+    "Symbol": "VTBSX",
+    "Quantity": 3099,
+    "Price": 104.49,
+    "Category": "Intermediate Core Bond"
+  }
 ]
 ```
 
 Required fields for each investment:
+
 - `Symbol`: The ticker symbol of the investment
 - `Quantity`: Number of shares owned
 - `Price`: Current price per share
 - `Category`: Investment category/type
 
 The application will automatically calculate:
+
 - Value (Quantity × Price)
 - Allocation (% of the total portfolio)
 
@@ -49,6 +61,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 ## Technology
 
 This project uses:
+
 - Next.js for the frontend framework
 - TypeScript for type safety
 - Tailwind CSS for styling

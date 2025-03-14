@@ -1,0 +1,6 @@
+{
+  "packageManager": "pnpm",
+  "terminal": {
+    "defaultPackageManager": "pnpm"
+  }
+}

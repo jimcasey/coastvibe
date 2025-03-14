@@ -35,7 +35,7 @@ export default function FinancialTable() {
 
     setInvestments(completeInvestments)
     setTotalValue(parseFloat(portfolioTotal.toFixed(2)))
-  }, [])
+  }, [seedData])
 
   // Format numbers for display
   const formatCurrency = (value: number) => {
