@@ -1,4 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# COASTFIRE
+
+A personal investment portfolio tracker built with Next.js.
+
+## Setup
+
+### Investment Data
+
+This application uses a JSON file to store investment data, which is excluded from version control for privacy.
+
+1. Create a file at `src/app/data/investmentData.json`
+2. Add your investment data in the following format:
+
+```json
+[
+  { "Symbol": "VTI", "Quantity": 3316, "Price": 276.81, "Category": "Large Blend" },
+  { "Symbol": "VTBSX", "Quantity": 3099, "Price": 104.49, "Category": "Intermediate Core Bond" }
+]
+```
+
+Required fields for each investment:
+- `Symbol`: The ticker symbol of the investment
+- `Quantity`: Number of shares owned
+- `Price`: Current price per share
+- `Category`: Investment category/type
+
+The application will automatically calculate:
+- Value (Quantity × Price)
+- Allocation (% of the total portfolio)
 
 ## Getting Started
 
@@ -18,19 +46,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Technology
 
-## Learn More
+This project uses:
+- Next.js for the frontend framework
+- TypeScript for type safety
+- Tailwind CSS for styling
+- [Geist](https://vercel.com/font) for typography
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application can be deployed on [Vercel](https://vercel.com/new) or any other platform that supports Next.js applications.
