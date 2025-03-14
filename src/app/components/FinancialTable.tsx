@@ -1,55 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import investmentData from '../data/investmentData.json'
-import { Investment, InvestmentData } from '../types'
+import { useInvestments } from '../context/InvestmentContext'
+import { formatCurrency, formatPercent } from '../utils/format'
 
 export default function FinancialTable() {
-  // Use the external JSON data
-  const seedData = investmentData as InvestmentData[]
-
-  const [investments, setInvestments] = useState<Investment[]>([])
-  const [totalValue, setTotalValue] = useState<number>(0)
-
-  useEffect(() => {
-    // Calculate Value for each investment
-    const investmentsWithValue = seedData.map((investment) => ({
-      ...investment,
-      Value: parseFloat((investment.Quantity * investment.Price).toFixed(2)),
-      Allocation: 0, // Temporary placeholder
-    }))
-
-    // Calculate total portfolio value
-    const portfolioTotal = investmentsWithValue.reduce(
-      (total, investment) => total + investment.Value,
-      0,
-    )
-
-    // Calculate allocation percentages
-    const completeInvestments = investmentsWithValue.map((investment) => ({
-      ...investment,
-      Allocation: parseFloat(
-        ((investment.Value / portfolioTotal) * 100).toFixed(2),
-      ),
-    }))
-
-    setInvestments(completeInvestments)
-    setTotalValue(parseFloat(portfolioTotal.toFixed(2)))
-  }, [seedData])
-
-  // Format numbers for display
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(value)
-  }
-
-  const formatPercent = (value: number) => {
-    return `${value}%`
-  }
+  const { investments, totalValue } = useInvestments()
 
   return (
     <div className="overflow-x-auto w-full">

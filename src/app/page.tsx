@@ -1,4 +1,5 @@
 import FinancialTable from './components/FinancialTable'
+import { InvestmentProvider } from './context/InvestmentContext'
 
 export default function Home() {
   return (
@@ -7,7 +8,9 @@ export default function Home() {
         <h1 className="text-3xl font-bold mb-4">COASTVIBE</h1>
       </header>
       <main className="w-full max-w-6xl">
-        <FinancialTable />
+        <InvestmentProvider>
+          <FinancialTable />
+        </InvestmentProvider>
       </main>
       <footer className="flex gap-[24px] flex-wrap items-center justify-center w-full py-4"></footer>
     </div>
