@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useInvestments } from '../../context/InvestmentContext'
 import { InvestmentData } from '../../types'
-import { TableInput, TableEditCell, TableError } from '../../components/table/Table'
+import { TableInput, TableEditCell, TableError } from '../../components/table'
 
 interface AddInvestmentProps {
   className?: string
@@ -15,7 +15,7 @@ export default function AddInvestment({ className = '' }: AddInvestmentProps) {
     Symbol: '',
     Quantity: 0,
     Price: 0,
-    Category: ''
+    Category: '',
   })
   const [formError, setFormError] = useState<string>('')
 
@@ -35,8 +35,15 @@ export default function AddInvestment({ className = '' }: AddInvestmentProps) {
     if (e) e.preventDefault()
 
     // Basic validation
-    if (!newInvestment.Symbol || newInvestment.Quantity <= 0 || newInvestment.Price <= 0 || !newInvestment.Category) {
-      setFormError('All fields are required. Quantity and Price must be greater than 0.')
+    if (
+      !newInvestment.Symbol ||
+      newInvestment.Quantity <= 0 ||
+      newInvestment.Price <= 0 ||
+      !newInvestment.Category
+    ) {
+      setFormError(
+        'All fields are required. Quantity and Price must be greater than 0.',
+      )
       return
     }
 
@@ -48,7 +55,7 @@ export default function AddInvestment({ className = '' }: AddInvestmentProps) {
       Symbol: '',
       Quantity: 0,
       Price: 0,
-      Category: ''
+      Category: '',
     })
     setFormError('')
   }
@@ -62,9 +69,7 @@ export default function AddInvestment({ className = '' }: AddInvestmentProps) {
 
   return (
     <tr className={`${className} bg-gray-50 dark:bg-gray-800`}>
-      {formError && (
-        <TableError message={formError} colSpan={6} />
-      )}
+      {formError && <TableError message={formError} colSpan={6} />}
       {!formError && (
         <>
           <TableEditCell>

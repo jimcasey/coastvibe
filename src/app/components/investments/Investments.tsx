@@ -10,7 +10,7 @@ import {
   TableHeaderCell,
   TableRow,
   TableTotalRow,
-} from '../table/Table'
+} from '../table'
 import AddInvestment from './AddInvestment'
 
 export default function Investments() {
