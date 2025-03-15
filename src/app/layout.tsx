@@ -29,7 +29,10 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable}`}
+        style={{ fontFamily: 'var(--font-geist-sans)' }}
+      >
         <StyledComponentsRegistry>
           <ConfigProvider
             theme={{

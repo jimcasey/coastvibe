@@ -1,6 +1,7 @@
 # CoastVibe Development Guide
 
 ## Commands
+
 - `pnpm dev` - Start development server with Turbopack
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
@@ -9,6 +10,7 @@
 - `pnpm format` - Format all files with Prettier
 
 ## Code Style Guidelines
+
 - **TypeScript**: Use strict typing, use interfaces for object shapes
 - **Functions**: Use arrow functions instead of `function` keyword
 - **Exports**: Do not use default exports, use named exports
@@ -27,5 +29,6 @@
 - **Imports**: Group and sort imports by external/internal
 
 ## Project Notes
+
 - Investment data stored in `src/app/data/investmentData.json` (not in git)
 - Uses Next.js, TypeScript, Ant Design, and React 19

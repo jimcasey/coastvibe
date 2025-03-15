@@ -10,7 +10,10 @@ interface InvestmentContextType {
   investments: Investment[]
   totalValue: number
   addInvestment: (investment: InvestmentData) => void
-  updateInvestment: (symbol: string, updatedFields: Partial<InvestmentData>) => void
+  updateInvestment: (
+    symbol: string,
+    updatedFields: Partial<InvestmentData>,
+  ) => void
 }
 
 // Create the context with a default empty value
@@ -29,7 +32,9 @@ interface InvestmentProviderProps {
 /**
  * Calculates the value for each investment (price * quantity)
  */
-const calculateInvestmentValues = (investments: InvestmentData[]): (InvestmentData & { Value: number })[] => {
+const calculateInvestmentValues = (
+  investments: InvestmentData[],
+): (InvestmentData & { Value: number })[] => {
   return investments.map((investment) => ({
     ...investment,
     Value: parseFloat((investment.Quantity * investment.Price).toFixed(2)),
@@ -41,7 +46,9 @@ const calculateInvestmentValues = (investments: InvestmentData[]): (InvestmentDa
  */
 const calculateTotalValue = (investments: { Value: number }[]): number => {
   return parseFloat(
-    investments.reduce((total, investment) => total + investment.Value, 0).toFixed(2)
+    investments
+      .reduce((total, investment) => total + investment.Value, 0)
+      .toFixed(2),
   )
 }
 
@@ -50,20 +57,19 @@ const calculateTotalValue = (investments: { Value: number }[]): number => {
  */
 const calculateAllocations = (
   investments: (InvestmentData & { Value: number })[],
-  totalValue: number
+  totalValue: number,
 ): Investment[] => {
   return investments.map((investment) => ({
     ...investment,
-    Allocation: parseFloat(
-      ((investment.Value / totalValue) * 100).toFixed(2),
-    ),
+    Allocation: parseFloat(((investment.Value / totalValue) * 100).toFixed(2)),
   }))
 }
 
 // Create the provider component
 export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   const seedData = investmentData as InvestmentData[]
-  const [investmentList, setInvestmentList] = React.useState<InvestmentData[]>(seedData)
+  const [investmentList, setInvestmentList] =
+    React.useState<InvestmentData[]>(seedData)
 
   // Use useMemo for derived state calculations to avoid unnecessary recalculations
   const { investments, totalValue } = React.useMemo(() => {
@@ -83,13 +89,16 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   }
 
   // Function to update an existing investment
-  const updateInvestment = (symbol: string, updatedFields: Partial<InvestmentData>): void => {
+  const updateInvestment = (
+    symbol: string,
+    updatedFields: Partial<InvestmentData>,
+  ): void => {
     setInvestmentList((prev) =>
       prev.map((investment) =>
         investment.Symbol === symbol
           ? { ...investment, ...updatedFields }
-          : investment
-      )
+          : investment,
+      ),
     )
   }
 
@@ -101,7 +110,7 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
       addInvestment,
       updateInvestment,
     }),
-    [investments, totalValue]
+    [investments, totalValue],
   )
 
   return (

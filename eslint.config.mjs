@@ -18,33 +18,43 @@ const eslintConfig = [
       import: importPlugin,
     },
     rules: {
-      'import/order': ['error', {
-        'groups': ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-        'newlines-between': 'always',
-        'alphabetize': { order: 'asc', caseInsensitive: true },
-        'pathGroups': [
-          {
-            'pattern': 'react',
-            'group': 'external',
-            'position': 'before'
-          }
-        ],
-        'pathGroupsExcludedImportTypes': ['react', 'next', 'antd']
-      }],
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+          pathGroups: [
+            {
+              pattern: 'react',
+              group: 'external',
+              position: 'before',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['react', 'next', 'antd'],
+        },
+      ],
       'import/no-unresolved': 'error',
       'import/named': 'error',
       'import/default': 'error',
       'import/namespace': 'error',
-      'import/no-duplicates': 'error'
+      'import/no-duplicates': 'error',
     },
     settings: {
       'import/resolver': {
         node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx']
-        }
-      }
-    }
-  }
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
+      },
+    },
+  },
 ]
 
 export default eslintConfig
