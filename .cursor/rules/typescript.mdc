@@ -1,10 +1,11 @@
 ---
-description: TypeScript rules
+description: TypeScript and React rules
 globs: *.ts, *.tsx
 alwaysApply: false
 ---
-# TypeScript rules
+# TypeScript and React rules
 
 - Use arrow functions instead of the `function` keyword
 - Do not use default exports
 - Use index files in folders
+- Use `import React from 'react'` instead of destructuring imports

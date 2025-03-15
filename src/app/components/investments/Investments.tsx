@@ -1,7 +1,6 @@
 'use client'
 
-
-import { useMemo } from 'react'
+import React from 'react'
 
 import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
@@ -16,7 +15,7 @@ export const Investments = () => {
   const { investments, totalValue } = useInvestments()
 
   // Define table columns with memoization to prevent unnecessary re-renders
-  const columns = useMemo<ColumnsType<Investment>>(() => [
+  const columns = React.useMemo<ColumnsType<Investment>>(() => [
     {
       title: 'Symbol',
       dataIndex: 'Symbol',

@@ -1,12 +1,6 @@
 'use client'
 
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useMemo,
-  ReactNode,
-} from 'react'
+import React from 'react'
 
 import investmentData from '../data/investmentData.json'
 import { Investment, InvestmentData } from '../types'
@@ -18,14 +12,16 @@ interface InvestmentContextType {
   addInvestment: (investment: InvestmentData) => void
 }
 
-// Create the context with a default value
-const InvestmentContext = createContext<InvestmentContextType | undefined>(
-  undefined,
-)
+// Create the context with a default empty value
+const InvestmentContext = React.createContext<InvestmentContextType>({
+  investments: [],
+  totalValue: 0,
+  addInvestment: () => {},
+})
 
 // Provider props interface
 interface InvestmentProviderProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 /**
@@ -65,10 +61,10 @@ const calculateAllocations = (
 // Create the provider component
 export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   const seedData = investmentData as InvestmentData[]
-  const [investmentList, setInvestmentList] = useState<InvestmentData[]>(seedData)
+  const [investmentList, setInvestmentList] = React.useState<InvestmentData[]>(seedData)
 
   // Use useMemo for derived state calculations to avoid unnecessary recalculations
-  const { investments, totalValue } = useMemo(() => {
+  const { investments, totalValue } = React.useMemo(() => {
     const withValues = calculateInvestmentValues(investmentList)
     const total = calculateTotalValue(withValues)
     const withAllocations = calculateAllocations(withValues, total)
@@ -85,7 +81,7 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   }
 
   // Create the context value object
-  const contextValue = useMemo(
+  const contextValue = React.useMemo(
     () => ({
       investments,
       totalValue,
@@ -103,7 +99,7 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
 
 // Custom hook for using the investment context
 export const useInvestments = (): InvestmentContextType => {
-  const context = useContext(InvestmentContext)
+  const context = React.useContext(InvestmentContext)
   if (context === undefined) {
     throw new Error('useInvestments must be used within an InvestmentProvider')
   }
