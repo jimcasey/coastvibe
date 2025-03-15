@@ -1,8 +1,9 @@
 'use client'
 
+import { Form, Input, InputNumber, Button, Card } from 'antd'
+
 import { useInvestments } from '../../context/InvestmentContext'
 import { InvestmentData } from '../../types'
-import { Form, Input, InputNumber, Button, Card } from 'antd'
 
 interface InvestmentFormProps {
   className?: string

@@ -7,6 +7,7 @@ import React, {
   useMemo,
   ReactNode,
 } from 'react'
+
 import investmentData from '../data/investmentData.json'
 import { Investment, InvestmentData } from '../types'
 

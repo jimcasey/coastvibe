@@ -1,11 +1,15 @@
 'use client'
 
+
 import { useMemo } from 'react'
-import { useInvestments } from '../../context/InvestmentContext'
-import { formatCurrency, formatPercent } from '../../utils/format'
+
 import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+
+import { useInvestments } from '../../context/InvestmentContext'
 import { Investment } from '../../types'
+import { formatCurrency, formatPercent } from '../../utils/format'
+
 import { InvestmentForm } from './InvestmentForm'
 
 export const Investments = () => {
