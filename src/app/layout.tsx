@@ -1,5 +1,9 @@
+import '@ant-design/v5-patch-for-react-19'
+
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { ConfigProvider, theme } from 'antd'
+import StyledComponentsRegistry from './components/AntdRegistry'
 import './globals.css'
 
 const geistSans = Geist({
@@ -27,7 +31,19 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <StyledComponentsRegistry>
+          <ConfigProvider
+            theme={{
+              algorithm: theme.defaultAlgorithm,
+              token: {
+                colorPrimary: '#3b82f6', // Tailwind blue-500
+                fontFamily: 'var(--font-geist-sans)',
+              },
+            }}
+          >
+            {children}
+          </ConfigProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )
