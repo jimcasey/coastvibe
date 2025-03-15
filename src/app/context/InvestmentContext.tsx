@@ -10,6 +10,7 @@ interface InvestmentContextType {
   investments: Investment[]
   totalValue: number
   addInvestment: (investment: InvestmentData) => void
+  updateInvestment: (symbol: string, updatedFields: Partial<InvestmentData>) => void
 }
 
 // Create the context with a default empty value
@@ -17,6 +18,7 @@ const InvestmentContext = React.createContext<InvestmentContextType>({
   investments: [],
   totalValue: 0,
   addInvestment: () => {},
+  updateInvestment: () => {},
 })
 
 // Provider props interface
@@ -80,12 +82,24 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
     setInvestmentList((prev) => [...prev, newInvestment])
   }
 
+  // Function to update an existing investment
+  const updateInvestment = (symbol: string, updatedFields: Partial<InvestmentData>): void => {
+    setInvestmentList((prev) =>
+      prev.map((investment) =>
+        investment.Symbol === symbol
+          ? { ...investment, ...updatedFields }
+          : investment
+      )
+    )
+  }
+
   // Create the context value object
   const contextValue = React.useMemo(
     () => ({
       investments,
       totalValue,
       addInvestment,
+      updateInvestment,
     }),
     [investments, totalValue]
   )
