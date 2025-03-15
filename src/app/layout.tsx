@@ -4,7 +4,7 @@ import { ConfigProvider, theme } from 'antd'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 
-import StyledComponentsRegistry from './components/AntdRegistry'
+import StyledComponentsRegistry from './components/StyledComponentsRegistry'
 import './globals.css'
 
 const geistSans = Geist({

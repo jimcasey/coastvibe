@@ -2,11 +2,11 @@
 
 import React from 'react'
 
-import investmentData from '../data/investmentData.json'
+import portfolioData from '../data/portfolioData.json'
 import { Investment, InvestmentData } from '../types'
 
 // Define the context interface
-interface InvestmentContextType {
+interface PortfolioContextType {
   investments: Investment[]
   totalValue: number
   addInvestment: (investment: InvestmentData) => void
@@ -17,7 +17,7 @@ interface InvestmentContextType {
 }
 
 // Create the context with a default empty value
-const InvestmentContext = React.createContext<InvestmentContextType>({
+const PortfolioContext = React.createContext<PortfolioContextType>({
   investments: [],
   totalValue: 0,
   addInvestment: () => {},
@@ -25,7 +25,7 @@ const InvestmentContext = React.createContext<InvestmentContextType>({
 })
 
 // Provider props interface
-interface InvestmentProviderProps {
+interface PortfolioProviderProps {
   children: React.ReactNode
 }
 
@@ -66,8 +66,8 @@ const calculateAllocations = (
 }
 
 // Create the provider component
-export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
-  const seedData = investmentData as InvestmentData[]
+export const PortfolioProvider = ({ children }: PortfolioProviderProps) => {
+  const seedData = portfolioData as InvestmentData[]
   const [investmentList, setInvestmentList] =
     React.useState<InvestmentData[]>(seedData)
 
@@ -114,17 +114,17 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   )
 
   return (
-    <InvestmentContext.Provider value={contextValue}>
+    <PortfolioContext.Provider value={contextValue}>
       {children}
-    </InvestmentContext.Provider>
+    </PortfolioContext.Provider>
   )
 }
 
 // Custom hook for using the investment context
-export const useInvestments = (): InvestmentContextType => {
-  const context = React.useContext(InvestmentContext)
+export const usePortfolio = (): PortfolioContextType => {
+  const context = React.useContext(PortfolioContext)
   if (context === undefined) {
-    throw new Error('useInvestments must be used within an InvestmentProvider')
+    throw new Error('usePortfolio must be used within a PortfolioProvider')
   }
   return context
 }

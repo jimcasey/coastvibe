@@ -5,7 +5,7 @@ import React from 'react'
 import { Table, Typography, Form, Input, InputNumber } from 'antd'
 import type { TableProps } from 'antd'
 
-import { useInvestments } from '../../context/InvestmentContext'
+import { useInvestments } from '../../context'
 import { Investment, InvestmentData } from '../../types'
 import { formatCurrency, formatPercent } from '../../utils/format'
 
@@ -16,8 +16,6 @@ interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   dataIndex: string
   title: string
   inputType: 'text' | 'number'
-  record: Investment
-  index: number
   children: React.ReactNode
 }
 
@@ -35,7 +33,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
         min={0}
         step={dataIndex === 'Price' ? 0.01 : 1}
         precision={dataIndex === 'Price' ? 2 : 0}
-        style={{ width: '100%' }}
       />
     ) : (
       <Input />
@@ -63,7 +60,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   )
 }
 
-export const Investments = () => {
+export const Portfolio = () => {
   const { investments, totalValue, updateInvestment, addInvestment } =
     useInvestments()
   const [form] = Form.useForm()
@@ -117,44 +114,46 @@ export const Investments = () => {
     {
       title: 'Symbol',
       dataIndex: 'Symbol',
-      width: '15%',
+      width: '10%',
       editable: true,
     },
     {
       title: 'Quantity',
       dataIndex: 'Quantity',
-      width: '15%',
+      width: '12%',
       editable: true,
       render: (quantity: number) => quantity.toLocaleString(),
     },
     {
       title: 'Price',
       dataIndex: 'Price',
-      width: '15%',
+      width: '12%',
       editable: true,
       render: (price: number) => formatCurrency(price),
     },
     {
       title: 'Category',
       dataIndex: 'Category',
-      width: '15%',
+      width: '25%',
       editable: true,
+      responsive: ['lg'],
     },
     {
       title: 'Value',
       dataIndex: 'Value',
-      width: '15%',
+      width: '18%',
       render: (value: number) => formatCurrency(value),
     },
     {
       title: 'Allocation',
       dataIndex: 'Allocation',
-      width: '15%',
+      width: '10%',
       render: (allocation: number) => formatPercent(allocation),
+      responsive: ['md'],
     },
     {
       title: 'Action',
-      width: '10%',
+      width: '13%',
       render: (_: unknown, record: Investment) => {
         const editable = isEditing(record)
         return editable ? (
@@ -222,7 +221,7 @@ export const Investments = () => {
   return (
     <div style={{ width: '100%' }}>
       <Title level={2} style={{ marginBottom: '16px' }}>
-        Investment Portfolio
+        Portfolio
       </Title>
       <Form form={form} component={false}>
         <Table

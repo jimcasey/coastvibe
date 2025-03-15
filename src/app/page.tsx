@@ -2,8 +2,8 @@
 
 import { Layout, Typography } from 'antd'
 
-import { Investments } from './components/investments'
-import { InvestmentProvider } from './context'
+import { Portfolio } from './components/portfolio'
+import { PortfolioProvider } from './context'
 
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
@@ -24,9 +24,9 @@ const Home = () => {
           padding: '32px',
         }}
       >
-        <InvestmentProvider>
-          <Investments />
-        </InvestmentProvider>
+        <PortfolioProvider>
+          <Portfolio />
+        </PortfolioProvider>
       </Content>
       <Footer
         style={{

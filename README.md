@@ -4,12 +4,12 @@ A personal investment portfolio tracker built with Next.js.
 
 ## Setup
 
-### Investment Data
+### Portfolio Data
 
-This application uses a JSON file to store investment data, which is excluded from version control for privacy.
+This application uses a JSON file to store portfolio data, which is excluded from version control for privacy.
 
-1. Create a file at `src/app/data/investmentData.json`
-2. Add your investment data in the following format:
+1. Create a file at `src/app/data/portfolioData.json`
+2. Add your portfolio data in the following format:
 
 ```json
 [
