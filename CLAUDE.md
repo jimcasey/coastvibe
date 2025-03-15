@@ -13,13 +13,13 @@
 - **Functions**: Use arrow functions instead of `function` keyword
 - **Exports**: Do not use default exports, use named exports
 - **Modules**: Use index files in folders for cleaner imports
-- **Formatting**: 
+- **Formatting**:
   - Single quotes, no semicolons, trailing commas
   - 2 space indentation
-- **Components**: 
+- **Components**:
   - Use React functional components with TS interfaces for props
   - Include 'use client' directive for client components
-- **Naming**: 
+- **Naming**:
   - PascalCase for components, interfaces, and types
   - camelCase for variables, functions, and instances
 - **Error Handling**: Use try/catch and throw with descriptive messages
@@ -28,4 +28,4 @@
 
 ## Project Notes
 - Investment data stored in `src/app/data/investmentData.json` (not in git)
-- Uses Next.js, TypeScript, Tailwind CSS, and React 19
+- Uses Next.js, TypeScript, Ant Design, and React 19

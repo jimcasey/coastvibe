@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { Table } from 'antd'
+import { Table, Typography } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 
 import { useInvestments } from '../../context/InvestmentContext'
@@ -10,6 +10,8 @@ import { Investment } from '../../types'
 import { formatCurrency, formatPercent } from '../../utils/format'
 
 import { InvestmentForm } from './InvestmentForm'
+
+const { Title } = Typography
 
 export const Investments = () => {
   const { investments, totalValue } = useInvestments()
@@ -72,8 +74,8 @@ export const Investments = () => {
   }
 
   return (
-    <div className="w-full">
-      <h2 className="text-2xl font-bold mb-4">Investment Portfolio</h2>
+    <div style={{ width: '100%' }}>
+      <Title level={2} style={{ marginBottom: '16px' }}>Investment Portfolio</Title>
       <Table
         columns={columns}
         dataSource={investments}
@@ -81,7 +83,7 @@ export const Investments = () => {
         pagination={false}
         summary={renderSummary}
       />
-      <div className="mt-4">
+      <div style={{ marginTop: '16px' }}>
         <InvestmentForm />
       </div>
     </div>

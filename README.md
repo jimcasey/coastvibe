@@ -64,7 +64,7 @@ This project uses:
 
 - Next.js for the frontend framework
 - TypeScript for type safety
-- Tailwind CSS for styling
+- Ant Design for UI components and styling
 - [Geist](https://vercel.com/font) for typography
 
 ## Deployment

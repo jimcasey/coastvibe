@@ -29,15 +29,13 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable}`} style={{ fontFamily: 'var(--font-geist-sans)' }}>
         <StyledComponentsRegistry>
           <ConfigProvider
             theme={{
               algorithm: theme.defaultAlgorithm,
               token: {
-                colorPrimary: '#3b82f6', // Tailwind blue-500
+                colorPrimary: '#3b82f6',
                 fontFamily: 'var(--font-geist-sans)',
               },
             }}

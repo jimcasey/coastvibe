@@ -1,19 +1,26 @@
+'use client'
+
+import { Layout, Typography } from 'antd'
+
 import { Investments } from './components/investments'
 import { InvestmentProvider } from './context'
 
+const { Header, Content, Footer } = Layout
+const { Title } = Typography
+
 const Home = () => {
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 gap-8 font-[family-name:var(--font-geist-sans)]">
-      <header className="w-full max-w-6xl">
-        <h1 className="text-3xl font-bold mb-4">COASTVIBE</h1>
-      </header>
-      <main className="w-full max-w-6xl">
+    <Layout style={{ minHeight: '100vh' }}>
+      <Header style={{ background: 'var(--background)', padding: '16px 32px' }}>
+        <Title level={3} style={{ margin: 0, color: 'var(--foreground)' }}>COASTVIBE</Title>
+      </Header>
+      <Content style={{ maxWidth: '1152px', width: '100%', margin: '0 auto', padding: '32px' }}>
         <InvestmentProvider>
           <Investments />
         </InvestmentProvider>
-      </main>
-      <footer className="flex gap-[24px] flex-wrap items-center justify-center w-full py-4"></footer>
-    </div>
+      </Content>
+      <Footer style={{ textAlign: 'center', background: 'var(--background)', padding: '16px' }}></Footer>
+    </Layout>
   )
 }
 
