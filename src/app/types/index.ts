@@ -1,3 +1,3 @@
-// Re-export types from their separate files
-export type { InvestmentData } from './InvestmentData'
-export type { Investment } from './Investment'
+// Re-export all types
+export * from './Investment'
+export * from './InvestmentData'

@@ -14,5 +14,9 @@ export const formatCurrency = (value: number): string => {
  * Format a number as a percentage
  */
 export const formatPercent = (value: number): string => {
-  return `${value}%`
+  return new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value / 100)
 }

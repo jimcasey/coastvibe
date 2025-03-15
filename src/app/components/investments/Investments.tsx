@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { useInvestments } from '../../context/InvestmentContext'
 import { formatCurrency, formatPercent } from '../../utils/format'
 import { Table } from 'antd'
@@ -10,7 +11,8 @@ import { InvestmentForm } from './InvestmentForm'
 export const Investments = () => {
   const { investments, totalValue } = useInvestments()
 
-  const columns: ColumnsType<Investment> = [
+  // Define table columns with memoization to prevent unnecessary re-renders
+  const columns = useMemo<ColumnsType<Investment>>(() => [
     {
       title: 'Symbol',
       dataIndex: 'Symbol',
@@ -45,10 +47,10 @@ export const Investments = () => {
       key: 'allocation',
       render: (allocation: number) => formatPercent(allocation),
     },
-  ]
+  ], [])
 
-  // Add a summary row for the total
-  const summary = () => {
+  // Create table summary row
+  const renderSummary = () => {
     return (
       <Table.Summary fixed>
         <Table.Summary.Row>
@@ -69,12 +71,12 @@ export const Investments = () => {
   return (
     <div className="w-full">
       <h2 className="text-2xl font-bold mb-4">Investment Portfolio</h2>
-      <Table 
-        columns={columns} 
-        dataSource={investments} 
+      <Table
+        columns={columns}
+        dataSource={investments}
         rowKey="Symbol"
         pagination={false}
-        summary={summary}
+        summary={renderSummary}
       />
       <div className="mt-4">
         <InvestmentForm />

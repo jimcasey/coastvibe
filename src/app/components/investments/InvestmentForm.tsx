@@ -8,11 +8,21 @@ interface InvestmentFormProps {
   className?: string
 }
 
+type FormValues = InvestmentData
+
+/**
+ * Formats numeric input with thousand separators
+ */
+const formatNumber = (value: number | string | undefined): string => {
+  if (value === undefined) return ''
+  return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
 export const InvestmentForm = ({ className = '' }: InvestmentFormProps) => {
   const { addInvestment } = useInvestments()
-  const [form] = Form.useForm()
+  const [form] = Form.useForm<FormValues>()
 
-  const onFinish = (values: InvestmentData) => {
+  const handleSubmit = (values: FormValues) => {
     addInvestment(values)
     form.resetFields()
   }
@@ -23,7 +33,7 @@ export const InvestmentForm = ({ className = '' }: InvestmentFormProps) => {
         form={form}
         name="investment"
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={handleSubmit}
         initialValues={{ Quantity: 0, Price: 0 }}
       >
         <Form.Item
@@ -47,7 +57,7 @@ export const InvestmentForm = ({ className = '' }: InvestmentFormProps) => {
             placeholder="e.g., 100"
             min={0}
             step={1}
-            formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            formatter={formatNumber}
           />
         </Form.Item>
 
@@ -65,7 +75,7 @@ export const InvestmentForm = ({ className = '' }: InvestmentFormProps) => {
             min={0}
             step={0.01}
             prefix="$"
-            formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            formatter={formatNumber}
           />
         </Form.Item>
 

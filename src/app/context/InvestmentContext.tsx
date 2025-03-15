@@ -3,8 +3,8 @@
 import React, {
   createContext,
   useState,
-  useEffect,
   useContext,
+  useMemo,
   ReactNode,
 } from 'react'
 import investmentData from '../data/investmentData.json'
@@ -27,55 +27,71 @@ interface InvestmentProviderProps {
   children: ReactNode
 }
 
+/**
+ * Calculates the value for each investment (price * quantity)
+ */
+const calculateInvestmentValues = (investments: InvestmentData[]): (InvestmentData & { Value: number })[] => {
+  return investments.map((investment) => ({
+    ...investment,
+    Value: parseFloat((investment.Quantity * investment.Price).toFixed(2)),
+  }))
+}
+
+/**
+ * Calculates the portfolio total value
+ */
+const calculateTotalValue = (investments: { Value: number }[]): number => {
+  return parseFloat(
+    investments.reduce((total, investment) => total + investment.Value, 0).toFixed(2)
+  )
+}
+
+/**
+ * Calculates allocation percentages based on individual values and total
+ */
+const calculateAllocations = (
+  investments: (InvestmentData & { Value: number })[],
+  totalValue: number
+): Investment[] => {
+  return investments.map((investment) => ({
+    ...investment,
+    Allocation: parseFloat(
+      ((investment.Value / totalValue) * 100).toFixed(2),
+    ),
+  }))
+}
+
 // Create the provider component
 export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
   const seedData = investmentData as InvestmentData[]
-  const [investments, setInvestments] = useState<Investment[]>([])
-  const [totalValue, setTotalValue] = useState<number>(0)
+  const [investmentList, setInvestmentList] = useState<InvestmentData[]>(seedData)
 
-  // Function to calculate values and allocations
-  const recalculatePortfolio = (investmentList: InvestmentData[]) => {
-    // Calculate Value for each investment
-    const investmentsWithValue = investmentList.map((investment) => ({
-      ...investment,
-      Value: parseFloat((investment.Quantity * investment.Price).toFixed(2)),
-      Allocation: 0, // Temporary placeholder
-    }))
+  // Use useMemo for derived state calculations to avoid unnecessary recalculations
+  const { investments, totalValue } = useMemo(() => {
+    const withValues = calculateInvestmentValues(investmentList)
+    const total = calculateTotalValue(withValues)
+    const withAllocations = calculateAllocations(withValues, total)
 
-    // Calculate total portfolio value
-    const portfolioTotal = investmentsWithValue.reduce(
-      (total, investment) => total + investment.Value,
-      0,
-    )
-
-    // Calculate allocation percentages
-    const completeInvestments = investmentsWithValue.map((investment) => ({
-      ...investment,
-      Allocation: parseFloat(
-        ((investment.Value / portfolioTotal) * 100).toFixed(2),
-      ),
-    }))
-
-    setInvestments(completeInvestments)
-    setTotalValue(parseFloat(portfolioTotal.toFixed(2)))
-  }
-
-  useEffect(() => {
-    recalculatePortfolio(seedData)
-  }, [seedData])
+    return {
+      investments: withAllocations,
+      totalValue: total,
+    }
+  }, [investmentList])
 
   // Function to add a new investment
-  const addInvestment = (newInvestment: InvestmentData) => {
-    const updatedInvestments = [...investments, newInvestment]
-    recalculatePortfolio(updatedInvestments)
+  const addInvestment = (newInvestment: InvestmentData): void => {
+    setInvestmentList((prev) => [...prev, newInvestment])
   }
 
   // Create the context value object
-  const contextValue: InvestmentContextType = {
-    investments,
-    totalValue,
-    addInvestment,
-  }
+  const contextValue = useMemo(
+    () => ({
+      investments,
+      totalValue,
+      addInvestment,
+    }),
+    [investments, totalValue]
+  )
 
   return (
     <InvestmentContext.Provider value={contextValue}>
@@ -85,7 +101,7 @@ export const InvestmentProvider = ({ children }: InvestmentProviderProps) => {
 }
 
 // Custom hook for using the investment context
-export const useInvestments = () => {
+export const useInvestments = (): InvestmentContextType => {
   const context = useContext(InvestmentContext)
   if (context === undefined) {
     throw new Error('useInvestments must be used within an InvestmentProvider')
