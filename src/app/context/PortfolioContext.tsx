@@ -14,6 +14,7 @@ interface PortfolioContextType {
     symbol: string,
     updatedFields: Partial<InvestmentData>,
   ) => void
+  deleteInvestment: (symbol: string) => void
 }
 
 // Create the context with a default empty value
@@ -22,6 +23,7 @@ const PortfolioContext = React.createContext<PortfolioContextType>({
   totalValue: 0,
   addInvestment: () => {},
   updateInvestment: () => {},
+  deleteInvestment: () => {},
 })
 
 // Provider props interface
@@ -102,6 +104,13 @@ export const PortfolioProvider = ({ children }: PortfolioProviderProps) => {
     )
   }
 
+  // Function to delete an investment
+  const deleteInvestment = (symbol: string): void => {
+    setInvestmentList((prev) =>
+      prev.filter((investment) => investment.Symbol !== symbol),
+    )
+  }
+
   // Create the context value object
   const contextValue = React.useMemo(
     () => ({
@@ -109,6 +118,7 @@ export const PortfolioProvider = ({ children }: PortfolioProviderProps) => {
       totalValue,
       addInvestment,
       updateInvestment,
+      deleteInvestment,
     }),
     [investments, totalValue],
   )

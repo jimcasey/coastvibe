@@ -1,3 +1,6 @@
 'use client'
 
-export { PortfolioProvider, usePortfolio as useInvestments } from './PortfolioContext'
+export {
+  PortfolioProvider,
+  usePortfolio as useInvestments,
+} from './PortfolioContext'

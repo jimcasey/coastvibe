@@ -2,14 +2,29 @@
 
 import React from 'react'
 
-import { Table, Typography, Form, Input, InputNumber } from 'antd'
+import {
+  SaveOutlined,
+  EditOutlined,
+  CloseOutlined,
+  PlusOutlined,
+} from '@ant-design/icons'
+import {
+  Table,
+  Typography,
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Button,
+  Tooltip,
+} from 'antd'
 import type { TableProps } from 'antd'
 
 import { useInvestments } from '../../context'
 import { Investment, InvestmentData } from '../../types'
 import { formatCurrency, formatPercent } from '../../utils/format'
 
-const { Title, Link } = Typography
+const { Title } = Typography
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean
@@ -47,9 +62,10 @@ const EditableCell: React.FC<EditableCellProps> = ({
           rules={[
             {
               required: true,
-              message: `Please Input ${title}!`,
+              message: `${title} is required`,
             },
           ]}
+          hasFeedback
         >
           {inputNode}
         </Form.Item>
@@ -61,8 +77,13 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }
 
 export const Portfolio = () => {
-  const { investments, totalValue, updateInvestment, addInvestment } =
-    useInvestments()
+  const {
+    investments,
+    totalValue,
+    updateInvestment,
+    addInvestment,
+    deleteInvestment,
+  } = useInvestments()
   const [form] = Form.useForm()
   const [editingKey, setEditingKey] = React.useState<string>('')
 
@@ -110,66 +131,97 @@ export const Portfolio = () => {
     setEditingKey(newSymbol)
   }
 
+  const handleDelete = (symbol: string) => {
+    deleteInvestment(symbol)
+  }
+
   const columns = [
     {
       title: 'Symbol',
       dataIndex: 'Symbol',
-      width: '10%',
       editable: true,
+      fixed: 'left',
     },
     {
       title: 'Quantity',
       dataIndex: 'Quantity',
-      width: '12%',
       editable: true,
       render: (quantity: number) => quantity.toLocaleString(),
     },
     {
       title: 'Price',
       dataIndex: 'Price',
-      width: '12%',
       editable: true,
       render: (price: number) => formatCurrency(price),
     },
     {
       title: 'Category',
       dataIndex: 'Category',
-      width: '25%',
       editable: true,
-      responsive: ['lg'],
     },
     {
       title: 'Value',
       dataIndex: 'Value',
-      width: '18%',
       render: (value: number) => formatCurrency(value),
     },
     {
       title: 'Allocation',
       dataIndex: 'Allocation',
-      width: '10%',
       render: (allocation: number) => formatPercent(allocation),
-      responsive: ['md'],
     },
     {
-      title: 'Action',
-      width: '13%',
+      dataIndex: 'action',
+      width: 89,
+      fixed: 'right',
       render: (_: unknown, record: Investment) => {
         const editable = isEditing(record)
         return editable ? (
           <span>
-            <Link
-              onClick={() => save(record.Symbol)}
-              style={{ marginRight: 8 }}
-            >
-              Save
-            </Link>
-            <Link onClick={cancel}>Cancel</Link>
+            <Tooltip title="Save">
+              <Button
+                icon={<SaveOutlined />}
+                shape="circle"
+                size="small"
+                onClick={() => save(record.Symbol)}
+                style={{ marginRight: 8 }}
+              />
+            </Tooltip>
+            <Tooltip title="Cancel">
+              <Button
+                icon={<CloseOutlined />}
+                shape="circle"
+                size="small"
+                onClick={cancel}
+              />
+            </Tooltip>
           </span>
         ) : (
-          <Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Edit
-          </Link>
+          <span>
+            <Tooltip title="Edit">
+              <Button
+                icon={<EditOutlined />}
+                shape="circle"
+                size="small"
+                disabled={editingKey !== ''}
+                onClick={() => edit(record)}
+                style={{ marginRight: 8 }}
+              />
+            </Tooltip>
+            <Popconfirm
+              title="Delete investment"
+              description="Are you sure you want to delete this investment?"
+              onConfirm={() => handleDelete(record.Symbol)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                icon={<CloseOutlined />}
+                shape="circle"
+                size="small"
+                disabled={editingKey !== ''}
+              />
+            </Popconfirm>
+          </span>
         )
       },
     },
@@ -209,9 +261,15 @@ export const Portfolio = () => {
             <strong>100%</strong>
           </Table.Summary.Cell>
           <Table.Summary.Cell index={3}>
-            <Link disabled={editingKey !== ''} onClick={handleAdd}>
-              Add
-            </Link>
+            <Tooltip title="Add investment">
+              <Button
+                icon={<PlusOutlined />}
+                shape="circle"
+                size="small"
+                disabled={editingKey !== ''}
+                onClick={handleAdd}
+              />
+            </Tooltip>
           </Table.Summary.Cell>
         </Table.Summary.Row>
       </Table.Summary>
@@ -236,6 +294,7 @@ export const Portfolio = () => {
           rowKey="Symbol"
           pagination={false}
           summary={renderSummary}
+          scroll={{ x: 1000 }}
         />
       </Form>
     </div>
