@@ -1,9 +1,9 @@
 'use client'
 
-import { Layout, Typography } from 'antd'
+import React from 'react'
 
-import { Portfolio } from './components/portfolio'
-import { PortfolioProvider } from './context'
+import { Layout, Typography, Card, Row, Col } from 'antd'
+import Link from 'next/link'
 
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
@@ -24,9 +24,35 @@ const Home = () => {
           padding: '32px',
         }}
       >
-        <PortfolioProvider>
-          <Portfolio />
-        </PortfolioProvider>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} sm={8}>
+            <Link href="/portfolio" style={{ textDecoration: 'none' }}>
+              <Card hoverable>
+                <Title level={4}>Portfolio</Title>
+                <p>Manage and track your investment portfolio</p>
+              </Card>
+            </Link>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Link href="/retirement-budget" style={{ textDecoration: 'none' }}>
+              <Card hoverable>
+                <Title level={4}>Retirement Budget</Title>
+                <p>Plan your retirement budget</p>
+              </Card>
+            </Link>
+          </Col>
+          <Col xs={24} sm={8}>
+            <Link
+              href="/retirement-projections"
+              style={{ textDecoration: 'none' }}
+            >
+              <Card hoverable>
+                <Title level={4}>Retirement Projections</Title>
+                <p>View your retirement projections</p>
+              </Card>
+            </Link>
+          </Col>
+        </Row>
       </Content>
       <Footer
         style={{
