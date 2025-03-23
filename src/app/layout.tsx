@@ -1,9 +1,16 @@
-import { ConfigProvider, theme } from 'antd'
-import type { Metadata } from 'next'
+'use client'
+
+import React from 'react'
+
+import { ConfigProvider, Layout, Typography, theme } from 'antd'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Link from 'next/link'
 
 import StyledComponentsRegistry from './components/StyledComponentsRegistry'
 import './globals.css'
+
+const { Header, Content, Footer } = Layout
+const { Title } = Typography
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,11 +21,6 @@ const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 })
-
-export const metadata: Metadata = {
-  title: 'COASTVIBE',
-  description: 'Investment Portfolio Tracker',
-}
 
 const RootLayout = ({
   children,
@@ -41,7 +43,32 @@ const RootLayout = ({
               },
             }}
           >
-            {children}
+            <Layout style={{ minHeight: '100vh' }}>
+              <Header style={{ background: 'var(--background)', padding: '16px 32px' }}>
+                <Link href="/" style={{ textDecoration: 'none' }}>
+                  <Title level={3} style={{ margin: 0, color: 'var(--foreground)' }}>
+                    COASTVIBE
+                  </Title>
+                </Link>
+              </Header>
+              <Content
+                style={{
+                  maxWidth: '1152px',
+                  width: '100%',
+                  margin: '0 auto',
+                  padding: '32px',
+                }}
+              >
+                {children}
+              </Content>
+              <Footer
+                style={{
+                  textAlign: 'center',
+                  background: 'var(--background)',
+                  padding: '16px',
+                }}
+              ></Footer>
+            </Layout>
           </ConfigProvider>
         </StyledComponentsRegistry>
       </body>
